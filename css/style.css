@@ -1,11 +1,40 @@
 :root {
-    --color-title: #22282b;
-    --color-body-bg: #E5E5E5;
-    --color-p: #adadad;
+    --color-title: #2c2f30;
+    --color-body-bg: #eeeeee;
+    --color-p: #5e5e5e;
+    --color-box: #f5f5f5;
+    font-family: "Lato", sans-serif;
 }
 
+/* Global CSS */
+body {
+    background-color: var(--color-body-bg);
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--color-title);
+    letter-spacing: 2px;
+}
+
+h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-title);
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-p);
+    margin-bottom: 10px;
+}
+
+/* overlay CSS */
 #overlay {
-    display: none;
+    display: flex;
     flex-direction: column;
     position: fixed;
     color: #FFFFFF;
@@ -14,5 +43,61 @@
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+/* Content CSS */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 5%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 52px 0px 12px 0px ;
+}
+
+input {
+    max-width: 250px;
+    flex: 1;
+    height: 32px;
+    border: 2px solid #d1d3d6;
     border-radius: 5px;
+    outline: none;
+    color: #909599;
+    padding: 0 8px;
+    margin: 0 20px 25px;
+}
+
+/* Section CSS */
+section {
+    display: grid;
+    grid-gap: 25px;
+    max-width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    grid-auto-rows: 200px;
+    justify-items: center;
+}
+
+.employee-box {
+    display: flex;
+    align-items: center;
+    height: 180px;
+    width: 420px;
+    border: 2px solid rgb(133, 133, 133, 0.4);
+    border-radius: 8px;
+    background-color: var(--color-box);
+    padding: 2rem;
+}
+
+img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 2rem;
 }

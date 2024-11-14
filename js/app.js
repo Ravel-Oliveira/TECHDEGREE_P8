@@ -1,0 +1,1 @@
+const url = 'https://randomuser.me/api/?results=12&inc=name,location,email,phone,picture,nat'
