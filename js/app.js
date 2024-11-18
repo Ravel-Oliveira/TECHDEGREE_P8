@@ -1,10 +1,6 @@
 const url = 'https://randomuser.me/api/?results=12&inc=name,location,email,phone,picture,nat';
 const section = document.getElementById('content');
 let employeeData;
-let index = 0;
-
-let test = [1, 2, 3, 4, 5, 6]
-
 
 
 function displayEmployees(data) {
