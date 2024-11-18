@@ -4,6 +4,7 @@ const search = document.getElementById('searchBox');
 let employeeData;
 
 
+// fetch employees function
 function displayEmployees(data) {
     data.map((employee, index) => {
         const card = document.createElement('div');
@@ -22,22 +23,7 @@ function displayEmployees(data) {
     })
 }
 
-
-function fetchEmployee(url) {
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            employeeData = data.results;
-            // console.log(employeeData);
-            displayEmployees(employeeData);
-        })
-};
-fetchEmployee(url);
-
-
-
 // Search function
-
 function searchBox() {
     let searchValue = search.value.toUpperCase();
     let employees = document.getElementsByClassName('employee-box');
@@ -53,6 +39,18 @@ function searchBox() {
     }
 }
 
+
+
 search.addEventListener('input', () => {
     searchBox()
 });
+
+function fetchEmployee(url) {
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            employeeData = data.results;
+            displayEmployees(employeeData);
+        })
+};
+fetchEmployee(url);
