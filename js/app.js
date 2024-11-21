@@ -1,7 +1,10 @@
-const url = 'https://randomuser.me/api/?results=12&inc=name,location,email,phone,picture,nat';
+const url = 'https://randomuser.me/api/?results=12';
 const section = document.getElementById('content');
 const search = document.getElementById('searchBox');
-let employeeData;
+const overlay = document.getElementById('overlay');
+const employeeOverlay = document.getElementById('employeeWrapper');
+const closeBtn = document.getElementById('close');
+let employeeData = [];
 
 
 // fetch employees function
@@ -23,6 +26,7 @@ function displayEmployees(data) {
     })
 }
 
+
 // Search function
 function searchBox() {
     let searchValue = search.value.toUpperCase();
@@ -39,6 +43,10 @@ function searchBox() {
     }
 }
 
+//overlay function
+function openOverlay() {
+    overlay.className = '';
+}
 
 
 search.addEventListener('input', () => {
@@ -51,6 +59,50 @@ function fetchEmployee(url) {
         .then(data => {
             employeeData = data.results;
             displayEmployees(employeeData);
+            // return employeeData;
         })
 };
+
+// async function fetchEmployee(url) {
+//     const res = await fetch(url);
+//     const data = await res.json();
+//     const result = await data.results;
+//     displayEmployees(result);
+//     employeeData = [...result];
+//     console.log(employeeData);
+//     return employeeData;
+// };
+
+
+section.addEventListener('click', (evt) => {
+    const e = evt.target;
+    if (e.className == 'employee-box' || e.parentElement.className == 'employee-box' || e.parentElement.parentElement.className == 'employee-box') {
+        const index = e.closest('.employee-box').dataset.index;
+        const birthday = employeeData[index].dob.date.slice(0, 10);
+        const day = birthday.slice(8, 10);
+        const month = birthday.slice(5, 7);
+        const year = birthday.slice(0, 4);
+        employeeOverlay.innerHTML = `
+            <img src="${employeeData[index].picture.large}" alt="${employeeData[index].name.first} profile picture">
+            <h3>${employeeData[index].name.first} ${employeeData[index].name.last}</h3>
+            <p>${employeeData[index].email}</p>
+            <p>${employeeData[index].location.city}</p>
+            <div id="extraInfo">
+                <p>${employeeData[index].phone}</p>
+                <p>${employeeData[index].location.street.number} ${employeeData[index].location.street.name}, ${employeeData[index].location.state} ${employeeData[index].location.postcode}</p>
+                <p>Birthday: ${day}/${month}/${year}</p>
+            </div>
+        `;
+        overlay.className = '';
+    };
+})
+
+document.getElementById('close').addEventListener('click', (evt) => {
+    const e = evt.target;
+    console.log(e);
+    overlay.className = 'hidden';
+})
+
+
 fetchEmployee(url);
+console.log(employeeData);
