@@ -6,7 +6,6 @@ const employeeOverlay = document.getElementById('employeeWrapper');
 const closeBtn = document.getElementById('close');
 let employeeData = [];
 
-
 // fetch employees function
 function displayEmployees(data) {
     data.map((employee, index) => {
@@ -26,7 +25,6 @@ function displayEmployees(data) {
     })
 }
 
-
 // Search function
 function searchBox() {
     let searchValue = search.value.toUpperCase();
@@ -43,20 +41,14 @@ function searchBox() {
     }
 }
 
-search.addEventListener('input', () => {
-    searchBox()
-});
-
 function fetchEmployee(url) {
     return fetch(url)
         .then(response => response.json())
         .then(data => {
             employeeData = data.results;
             displayEmployees(employeeData);
-            // return employeeData;
         })
 };
-
 
 function getEmployeeInfo(index) {
     const birthday = employeeData[index].dob.date.slice(0, 10);
@@ -76,21 +68,60 @@ function getEmployeeInfo(index) {
         `;
 }
 
+
+/***************
+Event Listerners
+****************/
+
+//Display employee overlay card
 section.addEventListener('click', (evt) => {
     const e = evt.target;
     if (e.className == 'employee-box' || e.parentElement.className == 'employee-box' || e.parentElement.parentElement.className == 'employee-box') {
         const index = e.closest('.employee-box').dataset.index;
+        employeeOverlay.dataset.indexOverlay = index;
         getEmployeeInfo(index);
         overlay.className = '';
     };
 })
 
+//Next arrow event
+document.getElementById('arrowRight').addEventListener('click', () => {
+    const index = parseInt(employeeOverlay.dataset.indexOverlay);
+    let newIndex;
+    if (index < 11) {
+        newIndex = index + 1;
+        getEmployeeInfo(newIndex);
+    } else {
+        newIndex = 0;
+        getEmployeeInfo(newIndex);
+    }
+    employeeOverlay.dataset.indexOverlay = newIndex;
+})
+
+//Previous arrow event
+document.getElementById('arrowLeft').addEventListener('click', () => {
+    const index = parseInt(employeeOverlay.dataset.indexOverlay);
+    let newIndex;
+    if (index > 0) {
+        newIndex = index - 1;
+        getEmployeeInfo(newIndex);
+    } else {
+        newIndex = 11;
+        getEmployeeInfo(newIndex);
+    }
+    employeeOverlay.dataset.indexOverlay = newIndex;
+})
+
+//Searchbox filter
+search.addEventListener('input', () => {
+    searchBox()
+});
+
+//Close overlay
 document.getElementById('close').addEventListener('click', (evt) => {
     const e = evt.target;
-    console.log(e);
     overlay.className = 'hidden';
 })
 
 
 fetchEmployee(url);
-console.log(employeeData);
