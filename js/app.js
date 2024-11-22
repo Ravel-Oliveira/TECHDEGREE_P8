@@ -43,12 +43,6 @@ function searchBox() {
     }
 }
 
-//overlay function
-function openOverlay() {
-    overlay.className = '';
-}
-
-
 search.addEventListener('input', () => {
     searchBox()
 });
@@ -63,26 +57,13 @@ function fetchEmployee(url) {
         })
 };
 
-// async function fetchEmployee(url) {
-//     const res = await fetch(url);
-//     const data = await res.json();
-//     const result = await data.results;
-//     displayEmployees(result);
-//     employeeData = [...result];
-//     console.log(employeeData);
-//     return employeeData;
-// };
 
-
-section.addEventListener('click', (evt) => {
-    const e = evt.target;
-    if (e.className == 'employee-box' || e.parentElement.className == 'employee-box' || e.parentElement.parentElement.className == 'employee-box') {
-        const index = e.closest('.employee-box').dataset.index;
-        const birthday = employeeData[index].dob.date.slice(0, 10);
-        const day = birthday.slice(8, 10);
-        const month = birthday.slice(5, 7);
-        const year = birthday.slice(0, 4);
-        employeeOverlay.innerHTML = `
+function getEmployeeInfo(index) {
+    const birthday = employeeData[index].dob.date.slice(0, 10);
+    const day = birthday.slice(8, 10);
+    const month = birthday.slice(5, 7);
+    const year = birthday.slice(0, 4);
+    employeeOverlay.innerHTML = `
             <img src="${employeeData[index].picture.large}" alt="${employeeData[index].name.first} profile picture">
             <h3>${employeeData[index].name.first} ${employeeData[index].name.last}</h3>
             <p>${employeeData[index].email}</p>
@@ -93,6 +74,13 @@ section.addEventListener('click', (evt) => {
                 <p>Birthday: ${day}/${month}/${year}</p>
             </div>
         `;
+}
+
+section.addEventListener('click', (evt) => {
+    const e = evt.target;
+    if (e.className == 'employee-box' || e.parentElement.className == 'employee-box' || e.parentElement.parentElement.className == 'employee-box') {
+        const index = e.closest('.employee-box').dataset.index;
+        getEmployeeInfo(index);
         overlay.className = '';
     };
 })
